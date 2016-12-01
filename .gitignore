@@ -24,3 +24,7 @@
 build/
 bin/
 lib/
+
+#Emacs backups and stuff
+*.*#
+*.*~

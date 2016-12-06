@@ -34,6 +34,13 @@ set (EXECUTABLE_OUTPUT_PATH "${MAINFOLDER}/bin")
 set (LIBRARY_OUTPUT_PATH "${MAINFOLDER}/lib")
 set (CATCH_DIR "${MAINFOLDER}/thirdparity/catch")
 
+#
+# Compiler flags for code coverage
+#
+set(GCC_COVERAGE_COMPILE_FLAGS "-coverage")
+set(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 
 #
 # Project Search Paths

@@ -8,7 +8,7 @@ cmake_minimum_required (VERSION 2.8)
 project (langevin2D)
 set (APPLICATION_NAME "langevin2D")
 set (APPLICATION_CODENAME "${PROJECT_NAME}")
-set (APPLICATION_COPYRIGHT_YEARS "206")
+set (APPLICATION_COPYRIGHT_YEARS "2016")
 set (APPLICATION_VERSION_MAJOR 0)
 set (APPLICATION_VERSION_MINOR 1)
 set (APPLICATION_VERSION_PATCH 0)
@@ -24,7 +24,6 @@ set (APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERS
 # Debugging Options
 #
 set (CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
-
 
 #
 # Project Output Paths
@@ -52,10 +51,10 @@ include_directories("${MAINFOLDER}/include")
 #
 # Add Build Targets
 #
-add_subdirectory(src)
+add_subdirectory("${MAINFOLDER}/src")
 
 enable_testing()
-add_subdirectory(test)
+add_subdirectory("${MAINFOLDER}/test")
 
 
 #

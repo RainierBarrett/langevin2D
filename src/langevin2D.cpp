@@ -1,6 +1,7 @@
 #include "langevin2D.hpp"
 #include <math.h>
 #include <limits>
+#include <fstream>
 
 namespace langevin2D {
 
@@ -40,6 +41,16 @@ namespace langevin2D {
       table_dists[i] = current_dist;
       table_forces[i] = calc_force(current_dist, sig12, sig6, coeff);
     }
+  }
+
+  void Langevin::read_params(std::string name){
+    using namespace std;
+    ifstream pfile;
+    pfile.open(name.c_str());
+    pfile >> this->T >> lambda >> dt >> tot_time >> potential_file_name >> particle_file_name;
+    if(!pfile.is_open()){printf("THAT IS NOT GOOD \n");}
+    printf("hi there, this is a test %f\n", this->T);
+    pfile.close();
   }
   
 }

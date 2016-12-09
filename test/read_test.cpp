@@ -18,6 +18,10 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
       THEN( "The class variables should be set."){
 	REQUIRE(abs(integrator.T - 10.0) < EPSILON);
 	REQUIRE(abs(integrator.lambda - 0.55) < EPSILON);
+	REQUIRE(abs(integrator.dt - 0.05) < EPSILON);
+	REQUIRE(abs(integrator.tot_time - 4.0) < EPSILON);
+	REQUIRE(integrator.potential_file_name == "test_pot.txt");
+	REQUIRE(integrator.particle_file_name == "test_particles_1.txt");
       }
     }
   }

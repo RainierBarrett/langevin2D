@@ -17,6 +17,7 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
 
       THEN( "The class variables should be set."){
 	REQUIRE(abs(integrator.T - 10.0) < EPSILON);
+	REQUIRE(abs(integrator.lambda - 0.55) < EPSILON);
       }
     }
   }

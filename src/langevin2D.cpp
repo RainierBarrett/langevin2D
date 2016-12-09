@@ -47,7 +47,7 @@ namespace langevin2D {
     using namespace std;
     ifstream pfile;
     pfile.open(name.c_str());
-    pfile >> this->T >> lambda >> dt >> tot_time >> potential_file_name >> particle_file_name;
+    pfile >> T >> lambda >> dt >> tot_time >> potential_file_name >> particle_file_name;
     if(!pfile.is_open()){printf("THAT IS NOT GOOD \n");}
     printf("hi there, this is a test %f\n", this->T);
     pfile.close();

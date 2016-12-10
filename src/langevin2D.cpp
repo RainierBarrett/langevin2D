@@ -2,6 +2,7 @@
 #include <math.h>
 #include <limits>
 #include <fstream>
+#include <cstdlib>
 
 namespace langevin2D {
 
@@ -49,8 +50,49 @@ namespace langevin2D {
     pfile.open(name.c_str());
     pfile >> T >> lambda >> dt >> tot_time >> potential_file_name >> particle_file_name;
     if(!pfile.is_open()){printf("THAT IS NOT GOOD \n");}
-    printf("hi there, this is a test %f\n", this->T);
     pfile.close();
+    read_potential(potential_file_name);//now read in from the potential file
+    read_particles(particle_file_name);//and also get the particle list
+  }
+
+  void Langevin::set_ntot(int new_ntot){
+    ntot = new_ntot;
+  }
+
+  void Langevin::set_dx(){
+    dx = abs(x_axis[1] - x_axis[0]);
+  }
+
+  void Langevin::set_dy(){
+    dy = abs(y_axis[1] - y_axis[0]);
+  }
+
+  void Langevin::read_particles(std::string name){
+    using namespace std;
+    ifstream partfile;
+    partfile.open(name.c_str());
+    //partfile >> n_particles;
+
+    partfile.close();
+    return;
+  }
+
+  void Langevin::read_potential(std::string name){
+    using namespace std;
+    ifstream potfile;
+    potfile.open(name.c_str());
+    potfile >> nx >> ny;
+    set_ntot(nx*ny);
+    int i = 0;
+    int j = 0;
+    for(i; i < nx; i++){
+      for(j = 0; j < ny; j++){
+	potfile >> x_axis[i] >> y_axis[j] >> f_x[i*ny + j] >> f_y[i*ny +j];
+      }
+    }
+    set_dx();
+    set_dy();
+    potfile.close();
   }
   
 }

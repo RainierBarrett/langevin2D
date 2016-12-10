@@ -23,6 +23,16 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
 	REQUIRE(integrator.potential_file_name == "test_pot.txt");
 	REQUIRE(integrator.particle_file_name == "test_particles_1.txt");
       }
+
+      AND_THEN("We should have read our potential file."){
+	REQUIRE(integrator.nx == 100);
+	REQUIRE(integrator.ny == 100);
+	REQUIRE(integrator.ntot == 100*100);
+	REQUIRE(abs(integrator.dx - 0.1) < EPSILON);
+	REQUIRE(abs(integrator.dy - 0.1) < EPSILON);
+	REQUIRE(abs(integrator.f_x[0]) == 0);
+	REQUIRE(abs(integrator.f_y[100]) == 0);
+      }
     }
   }
 }

@@ -6,11 +6,11 @@
 
 namespace langevin2D {
 
-  void Particle::set_x(double new_x){
+  void Particle::set_x(double new_x, double min, double max){
     x = new_x;
   }
 
-  void Particle::set_y(double new_y){
+  void Particle::set_y(double new_y, double min, double max){
     y = new_y;
   }
 

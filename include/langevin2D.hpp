@@ -17,8 +17,8 @@ namespace langevin2D {
     double v_y;//the particle's y-velocity
 
     //Setters
-    void set_x(double new_x);
-    void set_y(double new_y);
+    void set_x(double new_x, double min = -10.0, double max = 10.0);
+    void set_y(double new_y, double min = -10.0, double max = 10.0);
     void set_v_x(double new_v_x);
     void set_v_y(double new_v_y);
 

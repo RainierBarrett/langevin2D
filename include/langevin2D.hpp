@@ -8,11 +8,30 @@ namespace langevin2D {
   const int MAX_AXIS_SIZE = 256;//trying to overcome a bad_alloc error I keep getting 
   const int MAX_GRID_SIZE = 256*256;//trying to overcome a bad_alloc error I keep getting
 
+  class Particle{
+    public:
+    double x;//the particle's x-position
+    double y;//the particle's y-position
+    double v_x;//the particle's x-velocity
+    double v_y;//the particle's y-velocity
+
+    //Setters
+    void set_x(double new_x);
+    void set_y(double new_y);
+    void set_v_x(double new_v_x);
+    void set_v_y(double new_v_y);
+    
+  };
+
 
   class Langevin {
+    /*This is the main class for this project. It is the integrator and grid keeper class.
+     *It tracks the list of all particles in a given simulation with an array of pointers to Particle's.
+     *It is also responsible for reading input.
+     */
 
     public:
-
+      //The grid itself
       double x_axis[MAX_AXIS_SIZE];//the array of x-axis values 
       double y_axis[MAX_AXIS_SIZE];//the array of y-axis values 
       double f_x[MAX_GRID_SIZE];//the 1D x-forces array-- need to get 1D indices for each lookup
@@ -28,6 +47,12 @@ namespace langevin2D {
       void set_dx();//sets dx. Called during initial setup only
       void set_dy();//sets dy. Called during initial setup only
       void set_ntot(int new_ntot);//sets total number of gridpoints
+
+      //The list of particles within the simulation
+      Particle* particles;
+
+      //The number of particles present
+      int num_particles;
 
       //Langevin parameters-- none of these have setters because they're read in directly
       double T;//The simulation temperature
@@ -88,7 +113,7 @@ namespace langevin2D {
       void read_particles(std::string name);
 
 
-    Langevin() : sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y() {}
+  Langevin() : sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
     };
 
 }

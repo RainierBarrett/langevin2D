@@ -6,7 +6,21 @@
 
 namespace langevin2D {
 
+  void Particle::set_x(double new_x){
+    x = new_x;
+  }
 
+  void Particle::set_y(double new_y){
+    y = new_y;
+  }
+
+  void Particle::set_v_x(double new_v_x){
+    v_x = new_v_x;
+  }
+
+  void Particle::set_v_y(double new_v_y){
+    v_y = new_v_y;
+  }
   
   void Langevin::set_epsilon(double new_eps){
     epsilon = new_eps;

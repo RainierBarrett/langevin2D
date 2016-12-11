@@ -33,6 +33,10 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
 	REQUIRE(abs(integrator.f_x[0]) == 0);
 	REQUIRE(abs(integrator.f_y[100]) == 0);
       }
+      AND_THEN("We should have read our particle initial positions list."){
+	REQUIRE(integrator.num_particles == 50);
+      }
     }
   }
 }
+ 

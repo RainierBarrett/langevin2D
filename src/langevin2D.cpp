@@ -85,8 +85,15 @@ namespace langevin2D {
     using namespace std;
     ifstream partfile;
     partfile.open(name.c_str());
-    //partfile >> n_particles;
-
+    partfile >> num_particles;
+    printf("The number of particles I will read is now %i\n", num_particles);
+    int i = 0;
+    double x_in, y_in, v_x_in, v_y_in;//holders
+    for(i; i < num_particles; i++){
+      partfile >> x_in >> y_in >> v_x_in >> v_y_in;
+      printf("Currently doing %i : %f %f %f %f \n", i, x_in, y_in, v_x_in, v_y_in);
+      particles[i] = new Particle(x_in, y_in, v_x_in, v_y_in);
+    }
     partfile.close();
     return;
   }

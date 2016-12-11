@@ -21,7 +21,7 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
 	REQUIRE(abs(integrator.dt - 0.05) < EPSILON);
 	REQUIRE(abs(integrator.tot_time - 4.0) < EPSILON);
 	REQUIRE(integrator.potential_file_name == "test_pot.txt");
-	REQUIRE(integrator.particle_file_name == "test_particles_1.txt");
+	REQUIRE(integrator.particle_file_name == "test_particles_50.txt");
       }
 
       AND_THEN("We should have read our potential file."){
@@ -35,6 +35,7 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
       }
       AND_THEN("We should have read our particle initial positions list."){
 	REQUIRE(integrator.num_particles == 50);
+	REQUIRE(abs(integrator.particles[0]->x + 2.5 ) < EPSILON);
       }
     }
   }

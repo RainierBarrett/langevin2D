@@ -15,6 +15,5 @@ add_test(NAME AllTests COMMAND ${TEST_BIN})
 file(GLOB TXT_FILES "${MAINFOLDER}/*.txt")
 file(COPY ${TXT_FILES} DESTINATION "${MAINFOLDER}/build/test" )
 file(COPY ${TXT_FILES} DESTINATION "${MAINFOLDER}/bin")
-add_custom_target(catch "${MAINFOLDER}/bin/${TEST_BIN}" DEPENDS ${TEST_BIN} COMMENT "Executing unit t
-ests..." VERBATIM SOURCES ${TEST_SRC})
+add_custom_target(catch "${MAINFOLDER}/bin/${TEST_BIN}" DEPENDS ${TEST_BIN} COMMENT "Executing unit tests..." VERBATIM SOURCES ${TEST_SRC})
 add_custom_target(coverage "${MAINFOLDER}/coverage.sh")

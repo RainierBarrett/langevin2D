@@ -7,9 +7,10 @@
 namespace langevin2D {
   const int MAX_AXIS_SIZE = 256;//trying to overcome a bad_alloc error I keep getting 
   const int MAX_GRID_SIZE = 256*256;//trying to overcome a bad_alloc error I keep getting
+  const int MAX_NUM_PARTICLES = 256;//with the grid limit, I likewise limit num_particles
 
   class Particle{
-    public:
+  public:
     double x;//the particle's x-position
     double y;//the particle's y-position
     double v_x;//the particle's x-velocity
@@ -20,6 +21,14 @@ namespace langevin2D {
     void set_y(double new_y);
     void set_v_x(double new_v_x);
     void set_v_y(double new_v_y);
+
+    //Constructor from input values
+    Particle(double x_init, double y_init, double v_x_init, double v_y_init){
+      x = x_init;
+      y = y_init;
+      v_x = v_x_init;
+      v_y = v_y_init;
+    }
     
   };
 
@@ -49,7 +58,7 @@ namespace langevin2D {
       void set_ntot(int new_ntot);//sets total number of gridpoints
 
       //The list of particles within the simulation
-      Particle* particles;
+      Particle* particles[MAX_NUM_PARTICLES];
 
       //The number of particles present
       int num_particles;

@@ -28,3 +28,6 @@ lib/
 #Emacs backups and stuff
 *.*#
 *.*~
+
+#the input making folder I have
+input_gen/

@@ -36,6 +36,9 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
       AND_THEN("We should have read our particle initial positions list."){
 	REQUIRE(integrator.num_particles == 50);
 	REQUIRE(abs(integrator.particles[0]->x + 2.5 ) < EPSILON);
+	REQUIRE(abs(integrator.particles[49]->y + 2.4 ) < EPSILON);
+	REQUIRE(abs(integrator.particles[24]->v_x - 0.5) < EPSILON);
+	REQUIRE(abs(integrator.particles[24]->v_y - 0.25) < EPSILON);
       }
     }
   }

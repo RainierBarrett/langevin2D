@@ -7,11 +7,27 @@
 namespace langevin2D {
 
   void Particle::set_x(double new_x, double min, double max){
-    x = new_x;
+    if (new_x > max){
+      x = new_x - (max-min);
+    }
+    else if(new_x < min){
+      x = new_x + (max-min);
+    }
+    else{
+      x = new_x;
+    }
   }
 
   void Particle::set_y(double new_y, double min, double max){
+    if(new_y > max){
+      y = new_y - (max-min);
+    }
+    else if(new_y < min){
+      y = new_y + (max-min);
+    }
+    else{
     y = new_y;
+    }
   }
 
   void Particle::set_v_x(double new_v_x){

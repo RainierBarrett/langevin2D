@@ -77,12 +77,16 @@ namespace langevin2D {
   }
 
   double Langevin::read_force(double dist){
+    if(dist > r_cut){
+      return((float)0.0);
+    }
     int idx = floor(1024 * dist/r_cut);//the place to look in the table
     return(table_forces[idx]);
   }
 
   double Langevin::calc_dist(Particle p1, Particle p2){
-    return(sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
+    double dist = sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+    return(dist);
   }
 
   void Langevin::seed_rng(){

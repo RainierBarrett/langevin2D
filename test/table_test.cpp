@@ -31,6 +31,8 @@ SCENARIO( "Can tabulate LJ potentials, given our constants.", "[integrator]"){
 	double val1 = integrator.table_forces[256];
 	double val2 = integrator.read_force((float)integrator.r_cut/4);
 	REQUIRE(pow((val1 - val2), 2) < EPSILON);
+	double val3 = integrator.read_force(integrator.r_cut+1);
+	REQUIRE(pow(val3, 2) < EPSILON);
       }
     }
   }

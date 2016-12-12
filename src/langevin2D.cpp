@@ -3,6 +3,8 @@
 #include <limits>
 #include <fstream>
 #include <cstdlib>
+#include <boost/random.hpp>
+#include <boost/random/normal_distribution.hpp>
 
 namespace langevin2D {
 
@@ -74,6 +76,18 @@ namespace langevin2D {
     }
   }
 
+  void Langevin::seed_rng(){
+    rng.seed(static_cast<unsigned int>(std::time(0)));
+    return;
+  }
+
+  double Langevin::eta(){
+    boost::normal_distribution<> nd(0.0,sqrt(2 * T * lambda));
+    boost::variate_generator<boost::mt19937&, boost::normal_distribution<> > var_nor(rng, nd);
+    double number = var_nor();
+    return(number);
+  }
+
   void Langevin::read_params(std::string name){
     using namespace std;
     ifstream pfile;
@@ -83,6 +97,7 @@ namespace langevin2D {
     pfile.close();
     read_potential(potential_file_name);//now read in from the potential file
     read_particles(particle_file_name);//and also get the particle list
+    seed_rng();//need to do this before the sim starts
   }
 
   void Langevin::set_ntot(int new_ntot){

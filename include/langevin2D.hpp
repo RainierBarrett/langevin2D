@@ -2,6 +2,8 @@
 #define _LANGEVIN_HPP_
 #include <string>
 #include <fstream>
+#include <boost/random.hpp>
+#include <boost/random/normal_distribution.hpp>
 
 
 namespace langevin2D {
@@ -120,6 +122,11 @@ namespace langevin2D {
 
       //this is the function to read the particle file
       void read_particles(std::string name);
+
+      //these are the RNG-related things. Eta is the Gaussian process for the Langevin dynamics.
+      boost::mt19937 rng;
+      double eta();
+      void seed_rng();
 
 
   Langevin() : sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}

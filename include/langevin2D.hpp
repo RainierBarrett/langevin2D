@@ -78,10 +78,6 @@ namespace langevin2D {
       void set_sigma(double new_sig);//setter for sigma
       void set_epsilon(double new_eps);//setter for epsilon
 
-      //The force table reading function. Takes in particle distances, returns the force.
-      double read_force(double dist);
-
-
       /* Here I treat the LJ particle interactions using an efficient table lookup with
        * cheap interpolation for value-finding. If I just calculate a whole bunch of values
        * when I initialize the simulation, the whole thing goes faster in the long run.
@@ -101,6 +97,10 @@ namespace langevin2D {
       /* calc_force takes in sig12 and sig6 as input because they'll never change
        * throughout the loop it's called in
        */
+      double calc_dist(Particle p1, Particle p2);//calculates the Euclidean distance between two Particles
+
+      //The force table reading function. Takes in particle distances, returns the force.
+      double read_force(double dist);
 
       /* 
        * Here's the stuff for reading input files

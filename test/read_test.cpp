@@ -40,6 +40,12 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
 	REQUIRE(abs(integrator.particles[24]->v_x - 0.5) < EPSILON);
 	REQUIRE(abs(integrator.particles[24]->v_y - 0.25) < EPSILON);
       }
+      AND_THEN("We should be able to calculate inter-particle distance."){
+	REQUIRE(abs(integrator.particles[25]->x) < EPSILON);//should be 0
+	REQUIRE(abs(integrator.particles[25]->y) < EPSILON);//should be 0
+	double dist = integrator.calc_dist(*(integrator.particles[0]), *(integrator.particles[25]));
+	REQUIRE(abs(dist - 2.5*sqrt(2)) < EPSILON);
+      }
     }
   }
 }

@@ -81,6 +81,10 @@ namespace langevin2D {
     return(table_forces[idx]);
   }
 
+  double Langevin::calc_dist(Particle p1, Particle p2){
+    return(sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
+  }
+
   void Langevin::seed_rng(){
     rng.seed(static_cast<unsigned int>(std::time(0)));
     return;

@@ -84,9 +84,19 @@ namespace langevin2D {
     return(table_forces[idx]);
   }
 
-  double Langevin::calc_dist(Particle p1, Particle p2){
-    double dist = sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+  double Langevin::calc_dist(Particle* p1, Particle* p2){
+    double dist = sqrt(pow(p1->x - p2->x, 2) + pow(p1->y - p2->y, 2));
     return(dist);
+  }
+
+  double Langevin::calc_x_force(Particle* p1, Particle* p2, double force_tot, double dist){
+    double cosine_val = (p2->x - p1->x) / dist;
+    return(force_tot * cosine_val);
+  }
+
+  double Langevin::calc_y_force(Particle* p1, Particle* p2, double force_tot, double dist){
+    double sine_val = (p2->y - p1->y) / dist;
+    return(force_tot * sine_val);
   }
 
   void Langevin::seed_rng(){

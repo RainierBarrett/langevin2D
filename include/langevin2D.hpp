@@ -41,99 +41,108 @@ namespace langevin2D {
      *It is also responsible for reading input.
      */
 
-    public:
-      //The grid itself
-      double x_axis[MAX_AXIS_SIZE];//the array of x-axis values 
-      double y_axis[MAX_AXIS_SIZE];//the array of y-axis values 
-      double f_x[MAX_GRID_SIZE];//the 1D x-forces array-- need to get 1D indices for each lookup
-      double f_y[MAX_GRID_SIZE];//the 1D y-forces array-- need to get 1D indices for each lookup
+  public:
+    //The grid itself
+    double x_axis[MAX_AXIS_SIZE];//the array of x-axis values 
+    double y_axis[MAX_AXIS_SIZE];//the array of y-axis values 
+    double f_x[MAX_GRID_SIZE];//the 1D x-forces array-- need to get 1D indices for each lookup
+    double f_y[MAX_GRID_SIZE];//the 1D y-forces array-- need to get 1D indices for each lookup
 
-      //Simulation grid parameters      
-      double dx, dy;//dx and dy can differ, but I only allow 'regular' intervals
-      int nx, ny;//the number of x and y gridpoints, and the total amount.
-      //no setters since they're filled directly from ifstream
-      int ntot;//the total number of grid points
+    //Simulation grid parameters      
+    double dx, dy;//dx and dy can differ, but I only allow 'regular' intervals
+    int nx, ny;//the number of x and y gridpoints, and the total amount.
+    //no setters since they're filled directly from ifstream
+    int ntot;//the total number of grid points
       
-      //Simulation grid parameter setters
-      void set_dx();//sets dx. Called during initial setup only
-      void set_dy();//sets dy. Called during initial setup only
-      void set_ntot(int new_ntot);//sets total number of gridpoints
+    //Simulation grid parameter setters
+    void set_dx();//sets dx. Called during initial setup only
+    void set_dy();//sets dy. Called during initial setup only
+    void set_ntot(int new_ntot);//sets total number of gridpoints
 
-      //The list of particles within the simulation
-      Particle* particles[MAX_NUM_PARTICLES];
+    //The list of particles within the simulation
+    Particle* particles[MAX_NUM_PARTICLES];
 
-      //The number of particles present
-      int num_particles;
+    //The number of particles present
+    int num_particles;
 
-      //Langevin parameters-- none of these have setters because they're read in directly
-      double T;//The simulation temperature
-      double lambda;//The lambda value for the integrator
-      double dt;//the timestep size
-      double time;//the amount of time the sim has progressed
-      double tot_time;//the total time over which the sim will run
+    //Langevin parameters-- none of these have setters because they're read in directly
+    double T;//The simulation temperature
+    double lambda;//The lambda value for the integrator
+    double dt;//the timestep size
+    double time;//the amount of time the sim has progressed
+    double tot_time;//the total time over which the sim will run
 
-      //LJ parameters
-      double epsilon;//the epsilon value for the Lennard-Jones particle-particle interactions
-      double sigma;//the sigma value for the Lennard-Jones particle-particle interactions
-      void set_sigma(double new_sig);//setter for sigma
-      void set_epsilon(double new_eps);//setter for epsilon
+    //LJ parameters
+    double epsilon;//the epsilon value for the Lennard-Jones particle-particle interactions
+    double sigma;//the sigma value for the Lennard-Jones particle-particle interactions
+    void set_sigma(double new_sig);//setter for sigma
+    void set_epsilon(double new_eps);//setter for epsilon
 
-      /* Here I treat the LJ particle interactions using an efficient table lookup with
-       * cheap interpolation for value-finding. If I just calculate a whole bunch of values
-       * when I initialize the simulation, the whole thing goes faster in the long run.
-       * I just chose 1024 to have 'a lot' of points on the table. Note that the force table
-       * is calculated based on total distance, i.e., using inter-particle radii. This is
-       * addressed by projecting along the x and y axes at runtime. Saves on the LJ potential
-       * calculation, since I only need two values (distance, angle) to find x and y
-       * force projections among each particle pair, and they're symmetric, so I only need to calculate
-       * and lookup once per pair considered.
-       */
-      double r_cut;//the cutoff distance we'll be using for our neighbor list. Defaults to 2.5 
-      double table_dists[1024];//the 'x' values of our force table 
-      double  table_forces[1024];//the 'y' values of our force table
+    /* Here I treat the LJ particle interactions using an efficient table lookup with
+     * cheap interpolation for value-finding. If I just calculate a whole bunch of values
+     * when I initialize the simulation, the whole thing goes faster in the long run.
+     * I just chose 1024 to have 'a lot' of points on the table. Note that the force table
+     * is calculated based on total distance, i.e., using inter-particle radii. This is
+     * addressed by projecting along the x and y axes at runtime. Saves on the LJ potential
+     * calculation, since I only need two values (distance, angle) to find x and y
+     * force projections among each particle pair, and they're symmetric, so I only need to calculate
+     * and lookup once per pair considered.
+     */
+    double r_cut;//the cutoff distance we'll be using for our neighbor list. Defaults to 2.5 
+    double table_dists[1024];//the 'x' values of our force table 
+    double  table_forces[1024];//the 'y' values of our force table
 
-      void tabulate_forces();//tabulates the LJ forces for a range of distances
-      double calc_force(double dist, double sig12, double sig6, double coeff);//calculates LJ tabulation forces 
-      /* calc_force takes in sig12 and sig6 as input because they'll never change
-       * throughout the loop it's called in
-       */
-      double calc_dist(Particle p1, Particle p2);//calculates the Euclidean distance between two Particles
+    void tabulate_forces();//tabulates the LJ forces for a range of distances
+    double calc_force(double dist, double sig12, double sig6, double coeff);//calculates LJ tabulation forces 
+    /* calc_force takes in sig12 and sig6 as input because they'll never change
+     * throughout the loop it's called in
+     */
 
-      //The force table reading function. Takes in particle distances, returns the force.
-      double read_force(double dist);
+    //given two particles + the radial force and distance  between them, returns the x-projection
+    double calc_x_force(Particle* p1, Particle* p2, double force_tot, double dist);
+    //this does the same as calc_x_force, but for the y-projection
+    double calc_y_force(Particle* p1, Particle* p2, double force_tot, double dist);
 
-      /* 
-       * Here's the stuff for reading input files
-       */
-      //The name of the parameter file, and its fstream
-      std::string param_file_name;
-      std::ifstream param_file;
+    
+    double calc_dist(Particle* p1, Particle* p2);//calculates the Euclidean distance between two Particles
 
-      //The name of the potential file, and its fstream
-      std::string potential_file_name;
-      std::ifstream potential_file;
+    //The force table reading function. Takes in particle distances, returns the force.
+    double read_force(double dist);
 
-      //The name of the particle list file, and its fstream
-      std::string particle_file_name;
-      std::ifstream particle_file;
+    
 
-      //this is the function to read the parameter file
-      void read_params(std::string name);
+    /* 
+     * Here's the stuff for reading input files
+     */
+    //The name of the parameter file, and its fstream
+    std::string param_file_name;
+    std::ifstream param_file;
 
-      //this is the function to read the potential file
-      void read_potential(std::string name);
+    //The name of the potential file, and its fstream
+    std::string potential_file_name;
+    std::ifstream potential_file;
 
-      //this is the function to read the particle file
-      void read_particles(std::string name);
+    //The name of the particle list file, and its fstream
+    std::string particle_file_name;
+    std::ifstream particle_file;
 
-      //these are the RNG-related things. Eta is the Gaussian process for the Langevin dynamics.
-      boost::mt19937 rng;
-      double eta();
-      void seed_rng();
+    //this is the function to read the parameter file
+    void read_params(std::string name);
+
+    //this is the function to read the potential file
+    void read_potential(std::string name);
+
+    //this is the function to read the particle file
+    void read_particles(std::string name);
+
+    //these are the RNG-related things. Eta is the Gaussian process for the Langevin dynamics.
+    boost::mt19937 rng;
+    double eta();
+    void seed_rng();
 
 
-  Langevin() : sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
-    };
+    Langevin() : sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
+  };
 
 }
 #endif // _LANGEVIN_HPP_

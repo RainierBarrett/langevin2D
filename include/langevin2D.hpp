@@ -78,6 +78,9 @@ namespace langevin2D {
       void set_sigma(double new_sig);//setter for sigma
       void set_epsilon(double new_eps);//setter for epsilon
 
+      //The force table reading function. Takes in particle distances, returns the force.
+      double read_force(double dist);
+
 
       /* Here I treat the LJ particle interactions using an efficient table lookup with
        * cheap interpolation for value-finding. If I just calculate a whole bunch of values
@@ -134,3 +137,4 @@ namespace langevin2D {
 
 }
 #endif // _LANGEVIN_HPP_
+ 

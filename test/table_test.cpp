@@ -27,6 +27,11 @@ SCENARIO( "Can tabulate LJ potentials, given our constants.", "[integrator]"){
 	REQUIRE(pow((integrator.table_dists[100] - integrator.table_dists[10]), 2) > EPSILON);
 	REQUIRE(pow((integrator.table_forces[100] - integrator.table_forces[10]),2) > EPSILON);
       }
+      AND_THEN("We should be able to lookup a value."){
+	double val1 = integrator.table_forces[256];
+	double val2 = integrator.read_force((float)integrator.r_cut/4);
+	REQUIRE(pow((val1 - val2), 2) < EPSILON);
+      }
     }
   }
 }

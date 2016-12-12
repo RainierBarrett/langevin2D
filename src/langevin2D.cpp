@@ -76,6 +76,11 @@ namespace langevin2D {
     }
   }
 
+  double Langevin::read_force(double dist){
+    int idx = floor(1024 * dist/r_cut);//the place to look in the table
+    return(table_forces[idx]);
+  }
+
   void Langevin::seed_rng(){
     rng.seed(static_cast<unsigned int>(std::time(0)));
     return;

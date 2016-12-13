@@ -30,6 +30,8 @@ SCENARIO( "Can properly parse our input file.", "[input]"){
 	REQUIRE(integrator.ntot == 100*100);
 	REQUIRE(abs(integrator.dx - 0.1) < EPSILON);
 	REQUIRE(abs(integrator.dy - 0.1) < EPSILON);
+	REQUIRE(integrator.x_axis[50] < EPSILON);//should be the 0
+	REQUIRE(abs(integrator.x_axis[99] - 4.90) < EPSILON);
 	REQUIRE(abs(integrator.f_x[0]) == 0);
 	REQUIRE(abs(integrator.f_y[100]) == 0);
       }

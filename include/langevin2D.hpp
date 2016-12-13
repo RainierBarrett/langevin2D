@@ -129,7 +129,14 @@ namespace langevin2D {
     //The force table reading function. Takes in particle distances, returns the force.
     double read_force(double dist);
 
-    
+    /*
+      //these don't work right now for an unknown reason. I'm moving on without dealing with it
+    //retrieves the x-index of a particle's x-position on the grid (rounds down)
+    int get_x_idx(Particle* p);
+
+    //retrieves the y-index of a particle's y-position on the grid (rounds down)
+    int get_y_idx(Particle* p);
+    */
 
     /* 
      * Here's the stuff for reading input files

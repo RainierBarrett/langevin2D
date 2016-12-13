@@ -26,6 +26,9 @@ SCENARIO( "Can get total (external) forces on particles using neighbor lists.", 
 	REQUIRE(integrator.particles[0]->x < EPSILON);
 	REQUIRE(abs(fx0 - 24 * ((float)1/pow(2.0, 13) - (float)1/pow(2.0, 7))) < EPSILON);
 	REQUIRE(abs(fx2 + fx0 + fx1) < EPSILON);//forces should sum to 0 in this system
+	REQUIRE(abs(fy0) < EPSILON);//these should all be 0, but the force in y is
+	REQUIRE(abs(fy1) < EPSILON);//a totally analogous function
+	REQUIRE(abs(fy2) < EPSILON);
       }
     }
   }

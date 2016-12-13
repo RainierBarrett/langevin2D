@@ -113,15 +113,46 @@ namespace langevin2D {
       pair_force = read_force(pair_dist);
       force_sum += calc_x_force(particles[idx], particles[(neighbor_list[idx][i])], pair_force, pair_dist);
     }
-    printf("the x force_sum for %i came out to be %f\n",idx, force_sum);
     return(force_sum);
   }
 
   double Langevin::get_tot_force_y(int idx){
-
-    return(0.0);
+    int i;
+    double force_sum = 0.0;
+    double pair_force, pair_dist;
+#pragma omp parallel for private(i, pair_force, pair_dist) reduction(+: force_sum)
+    for(i = 0; i < neighbor_list[idx].size(); i++){//loop over all the neighbors
+      pair_dist = calc_dist(particles[idx], particles[(neighbor_list[idx][i])]);
+      pair_force = read_force(pair_dist);
+      force_sum += calc_y_force(particles[idx], particles[(neighbor_list[idx][i])], pair_force, pair_dist);
+    }
+    return(force_sum);
   }
 
+  //these don't work right now, so I'm moving on and not dealing with input forces yet
+/*
+  int Langevin::get_x_idx(Particle* p){
+    int i = 0;
+    double pos = (p->x);
+    for(i; i < nx; i++){
+      if(fabs(x_axis[i] - pos ) < dx){
+	return(i);
+      }
+    }
+    return(-1);
+  }
+
+  int Langevin::get_y_idx(Particle* p){
+    int i = 0;
+    double pos = (p->y);
+    for(i; i < ny ; i++){
+      if(fabs(y_axis[i] - pos) < dy){
+	return(i);
+      }
+    }
+    return(-1);
+  }
+*/
   void Langevin::seed_rng(){
     rng.seed(static_cast<unsigned int>(std::time(0)));
     return;

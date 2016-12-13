@@ -37,8 +37,8 @@ set (CATCH_DIR "${MAINFOLDER}/thirdparity/catch")
 # Compiler flags for code coverage
 #
 set(GCC_COVERAGE_COMPILE_FLAGS "-coverage")
-set(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-set(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -fopenmp")
+set(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage -fopenmp")
 set(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 
 #

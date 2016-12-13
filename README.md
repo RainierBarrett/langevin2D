@@ -38,6 +38,14 @@ Right now the tests are set to run all and reports all at once, too. Use catch t
 
 From within the build directory, and only AFTER you have fully built the project (cmake and make), you can invoke `make coverage` to run the coverage test script, which will print out the unit test coverage of the langevin2D.cpp file, and where to find the gcov files for it, if you're interested.
 
+## TODO
+
+* Implement neighbor list functionality for the Langevin class. -- Parallelism
+* Use neighbor list to make a calc_total_f_x() and calc_total_f_y() method. -- Parallelism
+* Implement an actual integrate function that takes in a particle and its neighbor list, and updates its position and velocities. -- Parallelism
+* Write a method to print each timestep to an output file.
+* Write a python file for generating a movie of the simulation.
+
 ## License
 
 ![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)

@@ -5,6 +5,10 @@
 #include <cstdlib>
 #include <boost/random.hpp>
 #include <boost/random/normal_distribution.hpp>
+#include <vector>
+#include <algorithm>
+#include <omp.h>
+
 
 namespace langevin2D {
 
@@ -147,6 +151,49 @@ namespace langevin2D {
       particles[i] = new Particle(x_in, y_in, v_x_in, v_y_in);
     }
     partfile.close();
+    make_neighbor_lists();//this makes the neighbor lists for all particles
+    return;
+  }
+
+  void Langevin::make_neighbor_lists(){
+    int i, j;
+    double dist;
+    #pragma omp parallel for private(i, j, dist) 
+    for(i = 0; i < num_particles; i++){//for each particle
+      for(j = 0; j < num_particles; j++){//look at all the (other) particles
+	if(j != i){//skip if it's the same index as me
+	  dist = calc_dist(particles[i], particles[j]);
+	  if(dist < r_cut){
+	    neighbor_list[i].push_back(j);//this index is a neighbor!
+	  }
+	}
+      }
+    }
+    return;
+  }
+
+  void Langevin::update_neighbor_lists(){
+    int i, j;
+    double dist;
+    //it's cheaper to just clear them all and re-make??
+    //I'm sure that's not true, but I don't have time to find an economical solution
+    //but I *know* this will work.
+    #pragma omp parallel for private(i)
+    for(i = 0; i < num_particles; i++){
+      neighbor_list[i].clear();//since ints are trivially destructive, this is fast
+    }
+    //now just re-make all neighbor lists... (copying so I don't remake i, j, dist)
+    #pragma omp parallel for private(i, j, dist) 
+    for(i = 0; i < num_particles; i++){//for each particle
+      for(j = 0; j < num_particles; j++){//look at all the (other) particles
+	if(j != i){//skip if it's the same index as me
+	  dist = calc_dist(particles[i], particles[j]);
+	  if(dist < r_cut){
+	    neighbor_list[i].push_back(j);//this index is a neighbor!
+	  }
+	}
+      }
+    }
     return;
   }
 

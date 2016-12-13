@@ -4,6 +4,7 @@
 #include <fstream>
 #include <boost/random.hpp>
 #include <boost/random/normal_distribution.hpp>
+#include <vector>
 
 
 namespace langevin2D {
@@ -91,6 +92,17 @@ namespace langevin2D {
     double r_cut;//the cutoff distance we'll be using for our neighbor list. Defaults to 2.5 
     double table_dists[1024];//the 'x' values of our force table 
     double  table_forces[1024];//the 'y' values of our force table
+    /*The neighbor list is an array of vectors of ints. Each vector corresponds to a particle
+     *based on its index in the particles[] array. Each entry in a given vector is an index of
+     *a particle that is a neighbor with the "owner particle" of that array, i.e. the one
+     *whose index matches that of the vector. I chose vectors because it allows me to only
+     *consider the particles in a given particle's neighbor list in an intuitive way, by just
+     *removing the ones that are no longer in the neighbor list.
+     */
+    std::vector<int> neighbor_list[MAX_NUM_PARTICLES];
+
+    void make_neighbor_lists();//this function actually generates the neighbor lists.
+    void update_neighbor_lists();//this updates the neighbor lists at each necessary step.
 
     void tabulate_forces();//tabulates the LJ forces for a range of distances
     double calc_force(double dist, double sig12, double sig6, double coeff);//calculates LJ tabulation forces 

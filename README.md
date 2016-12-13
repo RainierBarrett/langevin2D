@@ -22,7 +22,7 @@ For an example parameter file, see `test_params.txt`. Likewise, you can examine 
 
 Potential file format:
 `num_lines (int)`, followed by num_lines lines, each containing:
-`x_pos (float) y_pos (float) potential (float) force_x_component (float) force_y_component (float)`. Yes, you have to put in the *forces*, and not the potentials.
+`x_pos (float) y_pos (float) force_x_component (float) force_y_component (float)`. Yes, you have to put in the *forces*, and not the potentials.
 
 ## Running unit tests
 

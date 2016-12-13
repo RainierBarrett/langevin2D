@@ -103,6 +103,25 @@ namespace langevin2D {
     return(force_tot * sine_val);
   }
 
+  double Langevin::get_tot_force_x(int idx){
+    int i;
+    double force_sum = 0.0;
+    double pair_force, pair_dist;
+#pragma omp parallel for private(i, pair_force, pair_dist) reduction(+: force_sum)
+    for(i = 0; i < neighbor_list[idx].size(); i++){//loop over all the neighbors
+      pair_dist = calc_dist(particles[idx], particles[(neighbor_list[idx][i])]);
+      pair_force = read_force(pair_dist);
+      force_sum += calc_x_force(particles[idx], particles[(neighbor_list[idx][i])], pair_force, pair_dist);
+    }
+    printf("the x force_sum for %i came out to be %f\n",idx, force_sum);
+    return(force_sum);
+  }
+
+  double Langevin::get_tot_force_y(int idx){
+
+    return(0.0);
+  }
+
   void Langevin::seed_rng(){
     rng.seed(static_cast<unsigned int>(std::time(0)));
     return;
@@ -125,6 +144,7 @@ namespace langevin2D {
     read_potential(potential_file_name);//now read in from the potential file
     read_particles(particle_file_name);//and also get the particle list
     seed_rng();//need to do this before the sim starts
+    tabulate_forces();
   }
 
   void Langevin::set_ntot(int new_ntot){

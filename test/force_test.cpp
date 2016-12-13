@@ -25,6 +25,7 @@ SCENARIO( "Can get x and y force projections on a pair of particles.", "[forces]
       double force1_3 = integrator.read_force(distance1_3);
 
       THEN( "The values should be correct."){
+	REQUIRE(force1_2 < EPSILON);
 	REQUIRE(abs(force1_2 - integrator.calc_x_force(p1, p2, force1_2, distance1_2)) < EPSILON);//all in x
 	REQUIRE(integrator.calc_y_force(p1, p2, force1_2, distance1_2) < EPSILON);//should be 0 in y direction
 	REQUIRE(abs(integrator.calc_y_force(p1, p3, force1_3, distance1_3) - force1_3) < EPSILON);//all in y

@@ -115,6 +115,14 @@ namespace langevin2D {
     //this does the same as calc_x_force, but for the y-projection
     double calc_y_force(Particle* p1, Particle* p2, double force_tot, double dist);
 
+    //given a particle index, sums up all its external x-forces from other particles
+    //need to add in force field contribution also
+    double get_tot_force_x(int idx);
+
+    //given a particle index, sums up all its external y-forces from other particles
+    //need to add in force field contribution also
+    double get_tot_force_y(int idx);
+
     
     double calc_dist(Particle* p1, Particle* p2);//calculates the Euclidean distance between two Particles
 

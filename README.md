@@ -42,7 +42,7 @@ From within the build directory, and only AFTER you have fully built the project
 
 * Update neighbor list to work 'correctly', i.e. keep track of more than just r_cut away but a little bit more
 * Fix the get_total_force_x() and get_total_force_y() methods to incorporate the input forces. For some reason I can't get index-getting to work, but I can at least get other stuff done first.
-* Implement an actual integrate function that takes in a particle and its neighbor list, and updates its position and velocities. -- Parallelism
+* Fix the step() function to mark whether we need to update neighbor lists or not.
 * Write a method to print each timestep to an output file.
 * Write a python file for generating a movie of the simulation.
 

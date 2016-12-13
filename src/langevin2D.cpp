@@ -176,11 +176,11 @@ namespace langevin2D {
     int i, j;
     double dist;
     //it's cheaper to just clear them all and re-make??
-    //I'm sure that's not true, but I don't have time to find an economical solution
-    //but I *know* this will work.
+    //I'm sure that's not true, but I don't have time to find a more economical solution...
+    //But I *know* this will work, and clear() is fast for int vectors.
     #pragma omp parallel for private(i)
     for(i = 0; i < num_particles; i++){
-      neighbor_list[i].clear();//since ints are trivially destructive, this is fast
+      neighbor_list[i].clear();//since ints are 'trivially destructive', this is fast
     }
     //now just re-make all neighbor lists... (copying so I don't remake i, j, dist)
     #pragma omp parallel for private(i, j, dist) 

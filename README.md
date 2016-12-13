@@ -40,7 +40,7 @@ From within the build directory, and only AFTER you have fully built the project
 
 ## TODO
 
-* Implement neighbor list functionality for the Langevin class. -- Parallelism
+* Update neighbor list to work 'correctly', i.e. keep track of more than just r_cut away but a little bit more
 * Use neighbor list to make a calc_total_f_x() and calc_total_f_y() method. -- Parallelism
 * Implement an actual integrate function that takes in a particle and its neighbor list, and updates its position and velocities. -- Parallelism
 * Write a method to print each timestep to an output file.

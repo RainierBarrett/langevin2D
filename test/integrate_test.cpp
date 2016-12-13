@@ -27,22 +27,10 @@ SCENARIO( "Can call the integrate() method on a particle and change its stuff.",
 
       THEN( "The particle should have moved."){
 	REQUIRE((x1 != integrator.particles[0]->x));
-	REQUIRE((y1 - integrator.particles[0]->y) > EPSILON);
-	REQUIRE((vx1 - integrator.particles[0]->v_x) > EPSILON);
-	REQUIRE((vy1 - integrator.particles[0]->v_y) > EPSILON);
+	REQUIRE((y1 != integrator.particles[0]->y));
+	REQUIRE((vx1 != integrator.particles[0]->v_x));
+	REQUIRE((vy1 != integrator.particles[0]->v_y));
       }
     }
   }
 }
-
-
-
-
-/*
-  double tot_force = -lambda * v + eta() + forces[idx]/m;
-  double new_x = x + dt*v;
-  set_x(new_x);
-  idx = get_idx(x);
-  double new_v = v + dt * tot_force;
-  set_v(new_v);
-*/

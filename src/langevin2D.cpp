@@ -300,5 +300,14 @@ namespace langevin2D {
     double new_v_y = vy + dt * langevin_force_y;
     p->set_v_y(new_v_y);
   }
+
+  void Langevin::step(){
+    //can't be parallelized; have to do get_force calls, which rely on other particle positions
+    int i = 0;
+    for(i; i < num_particles; i++){
+      integrate(particles[i], i);
+    }
+    return;
+  }
   
 }

@@ -169,7 +169,7 @@ namespace langevin2D {
     using namespace std;
     ifstream pfile;
     pfile.open(name.c_str());
-    pfile >> T >> lambda >> dt >> tot_time >> potential_file_name >> particle_file_name;
+    pfile >> T >> lambda >> sigma >> epsilon >> dt >> tot_time >> potential_file_name >> particle_file_name;
     if(!pfile.is_open()){printf("THAT IS NOT GOOD \n");}
     pfile.close();
     read_potential(potential_file_name);//now read in from the potential file

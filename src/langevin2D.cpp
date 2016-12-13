@@ -265,5 +265,40 @@ namespace langevin2D {
     set_dy();
     potfile.close();
   }
+
+  void Langevin::integrate(Particle* p, int idx){
+    /*
+  double tot_force = -lambda * v + eta() + forces[idx]/m;
+  double new_x = x + dt*v;
+  set_x(new_x);
+  idx = get_idx(x);
+  double new_v = v + dt * tot_force;
+  set_v(new_v);
+*/
+    double x = p->x;
+    double y = p->y;
+    double vx = p->v_x;
+    double vy = p->v_y;
+
+    //get interparticle forces
+    double particle_f_x = get_tot_force_x(idx);
+    double particle_f_y = get_tot_force_y(idx);
+    //get the langevin total forces
+    double langevin_force_x = -lambda * vx + eta() + particle_f_x;
+    double langevin_force_y = -lambda * vy + eta() + particle_f_y;
+
+    //set all the new values
+    double new_x = x + dt * vx;
+    p->set_x(new_x);
+    
+    double new_y = y + dt * vy;
+    p->set_y(new_y);
+    
+    double new_v_x = vx + dt * langevin_force_x;
+    p->set_v_x(new_v_x);
+    
+    double new_v_y = vy + dt * langevin_force_y;
+    p->set_v_y(new_v_y);
+  }
   
 }

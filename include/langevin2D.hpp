@@ -167,6 +167,9 @@ namespace langevin2D {
     double eta();
     void seed_rng();
 
+    //integrates one particle. This is the Euler-integrator.
+    void integrate(Particle* p, int idx);
+
 
     Langevin() : sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
   };

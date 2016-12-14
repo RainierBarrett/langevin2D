@@ -17,3 +17,7 @@ file(COPY ${TXT_FILES} DESTINATION "${MAINFOLDER}/build/test" )
 file(COPY ${TXT_FILES} DESTINATION "${MAINFOLDER}/bin")
 add_custom_target(catch "${MAINFOLDER}/bin/${TEST_BIN}" DEPENDS ${TEST_BIN} COMMENT "Executing unit tests..." VERBATIM SOURCES ${TEST_SRC})
 add_custom_target(coverage "${MAINFOLDER}/coverage.sh")
+
+if(EXISTS "${MAINFOLDER}/build/test/output.dat")
+  file(COPY "${MAINFOLDER}/build/test/output.dat" DESTINATION "${MAINFOLDER}/build")
+endif()

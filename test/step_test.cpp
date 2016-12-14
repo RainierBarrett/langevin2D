@@ -24,9 +24,7 @@ SCENARIO( "Can call the step() method to update all the particles.", "[step]"){
       double y50 = integrator.particles[49]->y;
       double vx50 = integrator.particles[49]->v_x;
       double vy50 = integrator.particles[49]->v_y;
-      for(int i = 0; i < 20; i++){
-	integrator.step();
-      }
+      integrator.run();//should call step a short 100 times
 
 
       THEN( "The particle should have moved."){

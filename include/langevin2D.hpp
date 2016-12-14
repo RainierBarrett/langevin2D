@@ -173,8 +173,11 @@ namespace langevin2D {
     //the function that moves forward one step, for all particles.
     void step();
 
+    //the final function. does the printing at each step, and calls step() until time is done
+    void run();
 
-    Langevin() : lambda(1.0), sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
+
+    Langevin() : lambda(1.0), time(0.0), sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
   };
 
 }

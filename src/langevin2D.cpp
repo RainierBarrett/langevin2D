@@ -8,6 +8,9 @@
 #include <vector>
 #include <algorithm>
 #include <omp.h>
+#include <iostream>
+#include <iomanip>
+#include <string>
 
 
 namespace langevin2D {
@@ -303,11 +306,30 @@ namespace langevin2D {
 
   void Langevin::step(){
     //can't be parallelized; have to do get_force calls, which rely on other particle positions
+    using namespace std;
     int i = 0;
     for(i; i < num_particles; i++){
       integrate(particles[i], i);
+
     }
     return;
+  }
+
+  void Langevin::run(){
+    using namespace std;
+    int i;
+    ofstream output;
+    string outfile = "output.txt";
+    output.open(outfile.c_str());
+    for(time; time < tot_time; time+=dt){      
+      step();
+      output << "TIME: " << time << endl;
+      for(i = 0; i < num_particles; i++){
+    output << string("PARTICLE: ") << i << "\t x: " << particles[i]->x << "\t v_x: " << particles[i]->v_x << "\t y: " << particles[i]->y << string("\t v_y: ") << particles[i]->v_y << endl;
+      }
+      output << endl;
+    }
+    output.close();
   }
   
 }

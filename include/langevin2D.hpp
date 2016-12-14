@@ -72,6 +72,7 @@ namespace langevin2D {
     double dt;//the timestep size
     double time;//the amount of time the sim has progressed
     double tot_time;//the total time over which the sim will run
+    double m;//the 'mass'
 
     //LJ parameters
     double epsilon;//the epsilon value for the Lennard-Jones particle-particle interactions
@@ -177,7 +178,7 @@ namespace langevin2D {
     void run();
 
 
-    Langevin() : lambda(1.0), time(0.0), sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
+    Langevin() : lambda(1.0),m(10.0), time(0.0), sigma(1.0), epsilon(1.0), table_dists(), table_forces(), r_cut(2.5), x_axis(), y_axis(), f_x(), f_y(), num_particles(1) {}
   };
 
 }

@@ -1,1 +1,1 @@
-10.0 0.55 1.0 1.0 0.0001 0.01 test_pot.txt test_particles_50.txt
+10.0 0.55 0.1 0.1 0.001 0.1 test_pot.txt test_particles_50.txt

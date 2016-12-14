@@ -11,37 +11,38 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <cmath>
 
 
 namespace langevin2D {
 
   void Particle::set_x(double new_x, double min, double max){
     if (new_x > max){
-      x = new_x - (max-min);
+      x = fmod(new_x,(max)) + min;
     }
     else if(new_x < min){
-      x = new_x + (max-min);
+      x = max - fmod(fabs(new_x), fabs(min));
     }
     else{
       x = new_x;
     }
-  }
+  } 
 
   void Particle::set_y(double new_y, double min, double max){
     if(new_y > max){
-      y = new_y - (max-min);
+      y = fmod(new_y,(max)) + min;
     }
     else if(new_y < min){
-      y = new_y + (max-min);
+      y = max - fmod(fabs(new_y), fabs(min));
     }
     else{
-    y = new_y;
+      y = new_y;
     }
   }
 
   void Particle::set_v_x(double new_v_x){
     v_x = new_v_x;
-  }
+  } 
 
   void Particle::set_v_y(double new_v_y){
     v_y = new_v_y;
@@ -287,8 +288,8 @@ namespace langevin2D {
     double particle_f_x = get_tot_force_x(idx);
     double particle_f_y = get_tot_force_y(idx);
     //get the langevin total forces
-    double langevin_force_x = -lambda * vx + eta() + particle_f_x;
-    double langevin_force_y = -lambda * vy + eta() + particle_f_y;
+    double langevin_force_x = -lambda * vx + eta() + particle_f_x/m;
+    double langevin_force_y = -lambda * vy + eta() + particle_f_y/m;
 
     //set all the new values
     double new_x = x + dt * vx;
@@ -317,7 +318,8 @@ namespace langevin2D {
 
   void Langevin::run(){
     using namespace std;
-    int i, count;
+    int i;
+    int count = 0;
     ofstream output;
     string outfile = "output.txt";
     output.open(outfile.c_str());

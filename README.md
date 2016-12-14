@@ -15,6 +15,8 @@ Then open a terminal, go to the source directory and type the following commands
 
 ## Using the Program
 
+NOTE: If this message is here, then due to time constraints I couldn't get fancy with cmake before turning this in. If that's the case, then the program IS working, I promise, but to get its output, you'll have to change the `test_params.txt` file in the main directory, then cd into build, run `cmake ..`, `make` if you haven't, and finally just do `make catch` to run the "test" with your input file, and my premade grid of 50 particles in no potential field. The output will be located in the build/test directory under the name `output.txt`. Sorry for the mess.
+
 Input format --  input parameter file should contain one line with all values space-separated as follows:
 `temperature (float) damping_coefficient (float) time_step (float) total_time (float) potential_energy_filename (string) particle_file_name (string)`.
 
@@ -40,10 +42,8 @@ From within the build directory, and only AFTER you have fully built the project
 
 ## TODO
 
-* Update neighbor list to work 'correctly', i.e. keep track of more than just r_cut away but a little bit more
-* Fix the get_total_force_x() and get_total_force_y() methods to incorporate the input forces. For some reason I can't get index-getting to work, but I can at least get other stuff done first.
-* Fix the step() function to mark whether we need to update neighbor lists or not.
-* Write a method to print each timestep to an output file.
+* Have get_total_force_x() and get_total_force_y() methods incorporate the input forces. For some reason I can't get index-getting to work, but I can at least get other stuff done first. Also, these don't treat PBCs right now, due to how the neighbor lists are made. 
+* Have the step() function mark whether we need to update neighbor lists or not, instead of just updating them every 50 steps, which is costly but near-guaranteed to be OK...
 * Write a python file for generating a movie of the simulation.
 
 ## License

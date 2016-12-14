@@ -29,13 +29,13 @@ SCENARIO( "Can call the step() method to update all the particles.", "[step]"){
 
       THEN( "The particle should have moved."){
 	REQUIRE((x1 != integrator.particles[0]->x));
-	REQUIRE(abs(y1 - integrator.particles[0]->y) > EPSILON);
-	REQUIRE(abs(vx1 - integrator.particles[0]->v_x) > EPSILON);
-	REQUIRE(abs(vy1 - integrator.particles[0]->v_y) > EPSILON);
-	REQUIRE(abs(x50 != integrator.particles[49]->x));
-	REQUIRE(abs(y50 - integrator.particles[49]->y) > EPSILON);
-	REQUIRE(abs(vx50 - integrator.particles[49]->v_x) > EPSILON);
-	REQUIRE(abs(vy50 - integrator.particles[49]->v_y) > EPSILON);
+	REQUIRE((y1 != integrator.particles[0]->y));
+	REQUIRE((vx1 != integrator.particles[0]->v_x));
+	REQUIRE((vy1 != integrator.particles[0]->v_y));
+	REQUIRE((x50 != integrator.particles[49]->x));
+	REQUIRE((y50 != integrator.particles[49]->y));
+	REQUIRE((vx50 != integrator.particles[49]->v_x));
+	REQUIRE((vy50 != integrator.particles[49]->v_y));
       }
     }
   }

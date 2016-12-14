@@ -317,7 +317,7 @@ namespace langevin2D {
 
   void Langevin::run(){
     using namespace std;
-    int i;
+    int i, count;
     ofstream output;
     string outfile = "output.txt";
     output.open(outfile.c_str());
@@ -328,6 +328,11 @@ namespace langevin2D {
     output << string("PARTICLE: ") << i << "\t x: " << particles[i]->x << "\t v_x: " << particles[i]->v_x << "\t y: " << particles[i]->y << string("\t v_y: ") << particles[i]->v_y << endl;
       }
       output << endl;
+      count++;
+      if(count == 50){
+    update_neighbor_lists();
+    count = 0;
+  }
     }
     output.close();
   }
